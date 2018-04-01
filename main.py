@@ -1,14 +1,19 @@
 import pygame, sys, time, random
 from pygame.locals import *
+# from graph import Graph
+# from binaryHeap import BinaryHeap
+from leastCostPath import *
 
 # User-defined classes
 class Player:
     chefColor = pygame.Color('white')
     width = 100
     height = 100
+    startX = 100
+    startY = 100
     def __init__(self, surface):
         self.surface = surface
-        self.rect = [200,100, Player.width, Player.height]
+        self.rect = [Player.startX, Player.startY, Player.width, Player.height]
         self.color = Player.chefColor
         self.holding = False
 
@@ -53,6 +58,7 @@ def main():
     # create and initialize objects
     gameOver = False
     game = Game(surface)
+    player = Player(surface)
     game.draw()
     pygame.display.update()
 
@@ -61,9 +67,6 @@ def main():
         pygame.draw.line(surface, pygame.Color('white'), (100*i, 0), (100*i, 600), 2)
     for j in range(0, 6):
         pygame.draw.line(surface, pygame.Color('white'), (0, 100*j), (800, 100*j), 2)
-
-    # Draw objects
-    # game.draw()
 
     # Refresh the display
     pygame.display.update()
@@ -77,12 +80,13 @@ def main():
                 sys.exit()
             # Handle additional events
             if event.type == MOUSEBUTTONUP and not gameOver:
-                # pygame.draw.rect(surface, pygame.Color('black'), , 0)
+                pygame.draw.rect(surface, pygame.Color('black'),[player.startX + 2, player.startY + 2, player.width - 2, player.height - 2], 0)
                 x, y = pygame.mouse.get_pos()
                 x -= (x % 100) - 50
                 y -= (y % 100) - 50
-                print(x, y)
-
+                player.startX = x - 50
+                player.startY = y - 50
+                player.draw()
 
         # Update and draw objects for next frame
         gameOver = game.update()
