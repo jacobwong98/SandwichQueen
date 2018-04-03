@@ -20,12 +20,12 @@ class Player:
         self.holding = False
 
 class Game:
-    def __init__(self, surface, charColor, backColor):
+    backColor = pygame.Color('red')
+    charColor = pygame.Color('white')
+    def __init__(self, surface):
         self.surface = surface
         self.exit = False
         self.cont = True
-        self.charcolor = charColor
-        self.backcolor = backColor
         self.player = Player(self.surface)
 
     def draw(self):
@@ -61,7 +61,7 @@ class Game:
             if event.type == QUIT:
                 self.exit = True
             if event.type == MOUSEBUTTONUP and self.cont:
-                pygame.draw.rect(self.surface, self.backcolor,self.player.rect, 0)
+                pygame.draw.rect(self.surface, Game.backColor,self.player.rect, 0)
                 x, y = pygame.mouse.get_pos()
                 x -= (x % 100) - 50
                 y -= (y % 100) - 50
@@ -79,8 +79,6 @@ def main():
 
     # Create the window
     surface = pygame.display.set_mode((800, 600), 0, 0)
-    backColor = pygame.Color('red')
-    charColor = pygame.Color('white')
     pygame.display.set_caption('Sandwich Queen (Not copyright)')
     # Draw the game board grid
     for i in range(1, 8):
@@ -90,7 +88,7 @@ def main():
 
     # create and initialize objects
     gameOver = False
-    game = Game(surface, charColor, backColor)
+    game = Game(surface)
     # Start cooking
     game.playGame()
     # Quit if we get to this point
