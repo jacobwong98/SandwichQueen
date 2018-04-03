@@ -6,12 +6,14 @@ from leastCostPath import *
 class Player:
     def __init__(self, surface):
         self.surface = surface
-        self.rect = Rect(102, 102, 98, 98)
+        self.startX = 102
+        self.startY = 102
+        self.rect = [self.startX, self.startY, 98, 98]
         self.color = pygame.Color('white')
         self.holding = False
 
-    def draw(self):
-        pygame.draw.rect(self.surface, self.color, self.rect)
+    def draw(self, Color):
+        pygame.draw.rect(self.surface, Color, self.rect)
 
     def isHolding(self):
         self.holding = True
@@ -29,7 +31,7 @@ class Game:
         self.player = Player(self.surface)
 
     def draw(self):
-        self.player.draw()
+        self.player.draw(Game.backColor)
         pygame.display.update()
 
     def playGame(self):
@@ -39,8 +41,8 @@ class Game:
         # pygame.time.set_timer(pygame.USEREVENT, 1000)
         # font = pygame.font.SysFont('Consolas', 10)
         while not self.exit:
-            self.events()
             if self.cont:
+                self.events()
                 # for event in pygame.event.get():
                 #     if event.type == pygame.USEREVENT:
                 #         counter -= 1
@@ -61,18 +63,23 @@ class Game:
             if event.type == QUIT:
                 self.exit = True
             if event.type == MOUSEBUTTONUP and self.cont:
-                pygame.draw.rect(self.surface, Game.backColor,self.player.rect, 0)
+                # pygame.draw.rect(self.surface, Game.backColor,self.player.rect, 0)
+                self.player.draw(Game.charColor)
                 x, y = pygame.mouse.get_pos()
                 x -= (x % 100) - 50
                 y -= (y % 100) - 50
-                # self.player.startX = x - 48
-                # self.player.startY = y - 48
-                # self.player.draw(self.charcolor)
+                print(x, y)
+                self.player.startX = x - 48
+                self.player.startY = y - 48
+                self.player.rect = [self.player.startX, self.player.startY, 98, 98]
+                print(self.player.startX, self.player.startY, self.player.rect)
+                # self.player.draw(Game.backColor)
+                pygame.draw.rect(self.surface, Game.backColor,self.player.rect, 0)
 
     def update(self):
         # Put the customers timer here
         # Put the cooking/cutting timer here
-        pass
+        self.draw()
 def main():
     # Initialize pygame
     pygame.init()
