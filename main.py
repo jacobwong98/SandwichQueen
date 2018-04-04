@@ -67,17 +67,20 @@ class Game:
             if event.type == MOUSEBUTTONUP and self.cont:
                 # graph, location = load_graph('country-roads.txt')
                 # cost = CostDistance(location)
-                startCoord = (self.player.startX, self.player.startY)
+                start = None
+                end = None
+                startCoord = [self.player.startX, self.player.startY]
                 x, y = pygame.mouse.get_pos()
                 x -= (x % 100) - 2
                 y -= (y % 100) - 2
-                endCoord = (int(x), int(y))
-                print(startCoord, endCoord)
-                reached = least_cost_path(self.graph, startCoord, endCoord, self.cost)
+                endCoord = [int(x), int(y)]
+                start, end = findmin(startCoord, endCoord, self.location)
+                reached = least_cost_path(self.graph, start, end, self.cost)
+                print(reached)
                 if len(reached) > 0:
                     for i in range(len(reached)):
                         self.player.draw(Game.charColor)
-                        point = location[reached.pop(0)]
+                        point = self.location[reached.pop(0)]
                         self.player.startX = point[0]
                         self.player.startY = point[1]
                         self.player.rect = [self.player.startX, self.player.startY, 98, 98]

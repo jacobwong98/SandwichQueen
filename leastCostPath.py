@@ -5,6 +5,35 @@ from binaryHeap import BinaryHeap
 from graph import Graph
 import math
 
+def findmin(s, end, loc):
+    '''
+    This function will find the closest vertex from the user's coordinates
+    s - list of the user's starting latitude/longitude
+    end- list of the user's final latitude/longitude
+    loc- dictionary that has the vertex identifier as key and a tuple of the
+        latitude/longitude from the edmonton graph text file
+
+    Returns:
+    minStartVert - find the ID of the closest vertex from the starting point
+    minEndVert - find the ID of the closest vertex from the final point
+    '''
+    minStart = float("inf")
+    minEnd = float("inf")
+    minStartVert = None
+    minEndVert = None
+
+    for vert, tup in loc.items():
+        # use Manhatten distance to find the smallest distance to start point
+        if (abs(tup[0] - s[0]) + abs(tup[1] - s[1])) <= minStart:
+            minStartVert = vert
+            minStart = abs(tup[0] - s[0]) + abs(tup[1] - s[1])
+        # use Manhatten distance to find the smallest distance to end point
+        if (abs(tup[0] - end[0]) + abs(tup[1] - end[1])) <= minEnd:
+            minEndVert = vert
+            minEnd = abs(tup[0] - end[0]) + abs(tup[1] - end[1])
+
+    return minStartVert, minEndVert
+
 def least_cost_path(graph, start, dest, cost):
     """Find and return a least cost path in graph from start
     vertex to dest vertex.
@@ -108,6 +137,6 @@ def load_graph(filename):
 
             elif lines[0] == "E":
                 graph.add_edge((int(lines[1]), int(lines[2])))
-                graph.add_edge((int(lines[2]), int(lines[1])))
+                # graph.add_edge((int(lines[2]), int(lines[1])))
 
     return graph, location
