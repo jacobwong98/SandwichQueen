@@ -23,12 +23,14 @@ class Player:
 
 class Game:
     backColor = pygame.Color('red')
-    charColor = pygame.Color('white')
+    charColor = pygame.Color('blue')
     def __init__(self, surface):
         self.surface = surface
         self.exit = False
         self.cont = True
         self.player = Player(self.surface)
+        self.graph, self.location = load_graph('country-roads.txt')
+        self.cost = CostDistance(self.location)
 
     def draw(self):
         self.player.draw(Game.backColor)
@@ -63,18 +65,27 @@ class Game:
             if event.type == QUIT:
                 self.exit = True
             if event.type == MOUSEBUTTONUP and self.cont:
-                # pygame.draw.rect(self.surface, Game.backColor,self.player.rect, 0)
-                self.player.draw(Game.charColor)
+                # graph, location = load_graph('country-roads.txt')
+                # cost = CostDistance(location)
+                startCoord = (self.player.startX, self.player.startY)
                 x, y = pygame.mouse.get_pos()
-                x -= (x % 100) - 50
-                y -= (y % 100) - 50
-                print(x, y)
-                self.player.startX = x - 48
-                self.player.startY = y - 48
-                self.player.rect = [self.player.startX, self.player.startY, 98, 98]
-                print(self.player.startX, self.player.startY, self.player.rect)
+                x -= (x % 100) - 2
+                y -= (y % 100) - 2
+                endCoord = (int(x), int(y))
+                print(startCoord, endCoord)
+                reached = least_cost_path(self.graph, startCoord, endCoord, self.cost)
+                if len(reached) > 0:
+                    for i in range(len(reached)):
+                        self.player.draw(Game.charColor)
+                        point = location[reached.pop(0)]
+                        self.player.startX = point[0]
+                        self.player.startY = point[1]
+                        self.player.rect = [self.player.startX, self.player.startY, 98, 98]
+                        self.player.draw(Game.backColor)
+                # self.player.startX = x + 2
+                # self.player.startY = y + 2
+                # self.player.rect = [self.player.startX, self.player.startY, 98, 98]
                 # self.player.draw(Game.backColor)
-                pygame.draw.rect(self.surface, Game.backColor,self.player.rect, 0)
 
     def update(self):
         # Put the customers timer here
