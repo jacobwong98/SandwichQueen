@@ -24,6 +24,10 @@ class Environment:
     downArrow = pygame.image.load('arrowdown.png')
     leftArrow = pygame.image.load('arrowleft.png')
     rightArrow = pygame.image.load('arrowright.png')
+    lettuce = pygame.image.load('Lettuce.png')
+    tomato = pygame.image.load('tomato.png')
+    customer = pygame.image.load('customer.png')
+    meat = pygame.image.load('meat.png')
     def __init__(self, surface):
         self.surface = surface
 
@@ -34,3 +38,7 @@ class Environment:
         self.surface.blit(Environment.rightArrow, (402,102))
         self.surface.blit(Environment.rightArrow, (202,102))
         self.surface.blit(Environment.rightArrow, (402,402))
+        self.surface.blit(Environment.lettuce, (302, 302))
+        self.surface.blit(Environment.tomato, (402,302))
+        self.surface.blit(Environment.customer, (702, 2))
+        self.surface.blit(Environment.meat, (202, 202))
