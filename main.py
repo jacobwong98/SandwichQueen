@@ -2,7 +2,6 @@ import pygame, sys, time, random
 from pygame.locals import *
 from leastCostPath import *
 
-# User-defined classes
 class Player:
     def __init__(self, surface):
         self.surface = surface
@@ -65,30 +64,27 @@ class Game:
             if event.type == QUIT:
                 self.exit = True
             if event.type == MOUSEBUTTONUP and self.cont:
-                # graph, location = load_graph('country-roads.txt')
-                # cost = CostDistance(location)
-                start = None
-                end = None
-                startCoord = [self.player.startX, self.player.startY]
-                x, y = pygame.mouse.get_pos()
-                x -= (x % 100) - 2
-                y -= (y % 100) - 2
-                endCoord = [int(x), int(y)]
-                start, end = findmin(startCoord, endCoord, self.location)
-                reached = least_cost_path(self.graph, start, end, self.cost)
-                print(reached)
-                if len(reached) > 0:
-                    for i in range(len(reached)):
-                        self.player.draw(Game.charColor)
-                        point = self.location[reached.pop(0)]
-                        self.player.startX = point[0]
-                        self.player.startY = point[1]
-                        self.player.rect = [self.player.startX, self.player.startY, 98, 98]
-                        self.player.draw(Game.backColor)
-                # self.player.startX = x + 2
-                # self.player.startY = y + 2
-                # self.player.rect = [self.player.startX, self.player.startY, 98, 98]
-                # self.player.draw(Game.backColor)
+                self.getPath()
+
+    def getPath(self):
+        start = None
+        end = None
+        startCoord = [self.player.startX, self.player.startY]
+        x, y = pygame.mouse.get_pos()
+        x -= (x % 100) - 2
+        y -= (y % 100) - 2
+        endCoord = [int(x), int(y)]
+        start, end = findmin(startCoord, endCoord, self.location)
+        reached = least_cost_path(self.graph, start, end, self.cost)
+        print(reached)
+        if len(reached) > 0:
+            for i in range(len(reached)):
+                self.player.draw(Game.charColor)
+                point = self.location[reached.pop(0)]
+                self.player.startX = point[0]
+                self.player.startY = point[1]
+                self.player.rect = [self.player.startX, self.player.startY, 98, 98]
+                self.player.draw(Game.backColor)
 
     def update(self):
         # Put the customers timer here
