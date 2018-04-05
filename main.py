@@ -1,59 +1,30 @@
 import pygame, sys, time, random
 from pygame.locals import *
 from leastCostPath import *
-
-class Player:
-    def __init__(self, surface):
-        self.surface = surface
-        self.startX = 102
-        self.startY = 102
-        self.rect = [self.startX, self.startY, 98, 98]
-        self.color = pygame.Color('white')
-        self.holding = False
-
-    def draw(self, Color):
-        pygame.draw.rect(self.surface, Color, self.rect)
-
-    def isHolding(self):
-        self.holding = True
-
-    def notHolding(self):
-        self.holding = False
+from characters import *
 
 class Game:
-    backColor = pygame.Color('red')
-    charColor = pygame.Color('blue')
+    charColor = pygame.Color('red')
+    backColor = pygame.Color('black')
     def __init__(self, surface):
         self.surface = surface
         self.exit = False
         self.cont = True
         self.player = Player(self.surface)
+        self.environment = Environment(self.surface)
         self.graph, self.location = load_graph('country-roads.txt')
         self.cost = CostDistance(self.location)
 
     def draw(self):
-        self.player.draw(Game.backColor)
+        self.player.draw(Game.charColor)
+        self.environment.draw()
         pygame.display.update()
 
     def playGame(self):
         self.draw()
-        # clock = pygame.time.Clock()
-        # counter, text = 60, '60'.rjust(2)
-        # pygame.time.set_timer(pygame.USEREVENT, 1000)
-        # font = pygame.font.SysFont('Consolas', 10)
         while not self.exit:
             if self.cont:
                 self.events()
-                # for event in pygame.event.get():
-                #     if event.type == pygame.USEREVENT:
-                #         counter -= 1
-                #         if counter > 0:
-                #             text = str(counter).rjust(2)
-                #         else:
-                #             text = 'game'.rjust(2)
-                #         self.surface.blit(font.render(text, True, (255,255,255)), (750,50))
-                #         pygame.display.flip()
-                #         clock.tick(60)
                 self.update()
                 # Check cond??
             self.draw()
@@ -76,19 +47,16 @@ class Game:
         endCoord = [int(x), int(y)]
         start, end = findmin(startCoord, endCoord, self.location)
         reached = least_cost_path(self.graph, start, end, self.cost)
-        print(reached)
         if len(reached) > 0:
             for i in range(len(reached)):
-                self.player.draw(Game.charColor)
+                self.player.draw(Game.backColor)
                 point = self.location[reached.pop(0)]
                 self.player.startX = point[0]
                 self.player.startY = point[1]
                 self.player.rect = [self.player.startX, self.player.startY, 98, 98]
-                self.player.draw(Game.backColor)
+                self.player.draw(Game.charColor)
 
     def update(self):
-        # Put the customers timer here
-        # Put the cooking/cutting timer here
         self.draw()
 def main():
     # Initialize pygame
