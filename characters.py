@@ -28,6 +28,9 @@ class Environment:
     tomato = pygame.image.load('tomato.png')
     customer = pygame.image.load('customer.png')
     meat = pygame.image.load('meat.png')
+    plate = pygame.image.load('plate.png')
+    grill = pygame.image.load('grill.png')
+    cheese = pygame.image.load('cheese.png')
     def __init__(self, surface):
         self.surface = surface
 
@@ -36,9 +39,11 @@ class Environment:
         self.surface.blit(Environment.rightArrow, (2,102))
         self.surface.blit(Environment.rightArrow, (202,102))
         self.surface.blit(Environment.rightArrow, (402,102))
-        self.surface.blit(Environment.rightArrow, (202,102))
         self.surface.blit(Environment.rightArrow, (402,402))
         self.surface.blit(Environment.lettuce, (302, 302))
         self.surface.blit(Environment.tomato, (402,302))
         self.surface.blit(Environment.customer, (702, 2))
         self.surface.blit(Environment.meat, (202, 202))
+        self.surface.blit(Environment.plate, (2,2))
+        self.surface.blit(Environment.grill, (202, 502))
+        self.surface.blit(Environment.cheese, (202, 302))
