@@ -1,4 +1,5 @@
 import pygame, sys, time, random
+import numpy
 from pygame.locals import *
 
 class Player:
@@ -35,6 +36,7 @@ class Environment:
     cuttingboard = pygame.image.load('cuttingboard.png')
     def __init__(self, surface):
         self.surface = surface
+        self.matrix = numpy.arange(0).reshape(5,8)
 
     def draw(self):
         self.surface.blit(Environment.downArrow, (102,302))
@@ -51,3 +53,6 @@ class Environment:
         self.surface.blit(Environment.cheese, (202, 302))
         self.surface.blit(Environment.garbage, (702, 502))
         self.surface.blit(Environment.cuttingboard, (702,202))
+
+    def drawTimer(self):
+        print(self.matrix)

@@ -58,6 +58,7 @@ class Game:
 
     def update(self):
         self.draw()
+        self.environment.drawTimer()
 def main():
     # Initialize pygame
     pygame.init()
