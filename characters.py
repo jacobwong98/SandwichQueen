@@ -31,6 +31,8 @@ class Environment:
     plate = pygame.image.load('plate.png')
     grill = pygame.image.load('grill.png')
     cheese = pygame.image.load('cheese.png')
+    garbage = pygame.image.load('garbage.png')
+    cuttingboard = pygame.image.load('cuttingboard.png')
     def __init__(self, surface):
         self.surface = surface
 
@@ -47,3 +49,5 @@ class Environment:
         self.surface.blit(Environment.plate, (2,2))
         self.surface.blit(Environment.grill, (202, 502))
         self.surface.blit(Environment.cheese, (202, 302))
+        self.surface.blit(Environment.garbage, (702, 502))
+        self.surface.blit(Environment.cuttingboard, (702,202))
