@@ -1,5 +1,4 @@
 import pygame, sys, time, random
-# import numpy
 from pygame.locals import *
 
 class Player:
@@ -10,7 +9,7 @@ class Player:
         self.rect = [self.startX, self.startY, 98, 98]
         self.color = pygame.Color('white')
         self.holding = False
-        self.inHands = set()
+        self.inHands = []
 
     def draw(self, Color):
         pygame.draw.rect(self.surface, Color, self.rect)
@@ -37,7 +36,8 @@ class Environment:
     cuttingboard = pygame.image.load('../Images/cuttingboard.png')
     def __init__(self, surface):
         self.surface = surface
-        # self.matrix = numpy.full((6,8), 0)
+        self.matrix = [[9,0,0,0,0,0],[0,0,0,0,0,0],[0,0,1,2,0,5],[0,0,0,3,0,0],
+        [0,0,0,4,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[8,0,6,0,0,7]]
 
     def draw(self):
         self.surface.blit(Environment.downArrow, (102,302))
@@ -54,6 +54,10 @@ class Environment:
         self.surface.blit(Environment.cheese, (202, 302))
         self.surface.blit(Environment.garbage, (702, 502))
         self.surface.blit(Environment.cuttingboard, (702,202))
+
+
+    def getClass(self, x, y):
+        return self.matrix[x][y]
 
     def drawTimer(self):
         # print(self.matrix)

@@ -137,6 +137,6 @@ def load_graph(filename):
 
             elif lines[0] == "E":
                 graph.add_edge((int(lines[1]), int(lines[2])))
-                # graph.add_edge((int(lines[2]), int(lines[1])))
+                graph.add_edge((int(lines[2]), int(lines[1])))
 
     return graph, location

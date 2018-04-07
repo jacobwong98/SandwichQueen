@@ -14,6 +14,7 @@ class Game:
         self.environment = Environment(self.surface)
         self.graph, self.location = load_graph('country-roads.txt')
         self.cost = CostDistance(self.location)
+        self.temp = None
 
     def draw(self):
         self.player.draw(Game.charColor)
@@ -47,6 +48,7 @@ class Game:
         endCoord = [int(x), int(y)]
         start, end = findmin(startCoord, endCoord, self.location)
         reached = least_cost_path(self.graph, start, end, self.cost)
+
         if len(reached) > 0:
             for i in range(len(reached)):
                 self.player.draw(Game.backColor)
@@ -56,6 +58,8 @@ class Game:
                 self.player.rect = [self.player.startX, self.player.startY, 98, 98]
                 self.player.draw(Game.charColor)
 
+        self.temp = self.environment.getClass(int((x-2)/100), int((y-2)/100))
+        # self.temp.addHands()
     def update(self):
         self.draw()
         self.environment.drawTimer()
