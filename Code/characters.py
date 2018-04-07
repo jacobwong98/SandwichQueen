@@ -1,5 +1,5 @@
 import pygame, sys, time, random
-import numpy
+# import numpy
 from pygame.locals import *
 
 class Player:
@@ -10,6 +10,7 @@ class Player:
         self.rect = [self.startX, self.startY, 98, 98]
         self.color = pygame.Color('white')
         self.holding = False
+        self.inHands = set()
 
     def draw(self, Color):
         pygame.draw.rect(self.surface, Color, self.rect)
@@ -21,22 +22,22 @@ class Player:
         self.holding = False
 
 class Environment:
-    upArrow = pygame.image.load('arrowup.png')
-    downArrow = pygame.image.load('arrowdown.png')
-    leftArrow = pygame.image.load('arrowleft.png')
-    rightArrow = pygame.image.load('arrowright.png')
-    lettuce = pygame.image.load('Lettuce.png')
-    tomato = pygame.image.load('tomato.png')
-    customer = pygame.image.load('customer.png')
-    meat = pygame.image.load('meat.png')
-    plate = pygame.image.load('plate.png')
-    grill = pygame.image.load('grill.png')
-    cheese = pygame.image.load('cheese.png')
-    garbage = pygame.image.load('garbage.png')
-    cuttingboard = pygame.image.load('cuttingboard.png')
+    upArrow = pygame.image.load('../Images/arrowup.png')
+    downArrow = pygame.image.load('../Images/arrowdown.png')
+    leftArrow = pygame.image.load('../Images/arrowleft.png')
+    rightArrow = pygame.image.load('../Images/arrowright.png')
+    lettuce = pygame.image.load('../Images/Lettuce.png')
+    tomato = pygame.image.load('../Images/tomato.png')
+    customer = pygame.image.load('../Images/customer.png')
+    meat = pygame.image.load('../Images/meat.png')
+    plate = pygame.image.load('../Images/plate.png')
+    grill = pygame.image.load('../Images/grill.png')
+    cheese = pygame.image.load('../Images/cheese.png')
+    garbage = pygame.image.load('../Images/garbage.png')
+    cuttingboard = pygame.image.load('../Images/cuttingboard.png')
     def __init__(self, surface):
         self.surface = surface
-        self.matrix = numpy.arange(0).reshape(5,8)
+        # self.matrix = numpy.full((6,8), 0)
 
     def draw(self):
         self.surface.blit(Environment.downArrow, (102,302))
@@ -55,4 +56,5 @@ class Environment:
         self.surface.blit(Environment.cuttingboard, (702,202))
 
     def drawTimer(self):
-        print(self.matrix)
+        # print(self.matrix)
+        pass
