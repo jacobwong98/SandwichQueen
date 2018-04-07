@@ -12,9 +12,11 @@ class Game:
         self.cont = True
         self.player = Player(self.surface)
         self.environment = Environment(self.surface)
+        self.plate = []
+        self.customer = Customer()
+        self.customerOrder = self.customer.createOrder()
         self.graph, self.location = load_graph('country-roads.txt')
         self.cost = CostDistance(self.location)
-        self.temp = None
 
     def draw(self):
         self.player.draw(Game.charColor)
@@ -58,11 +60,40 @@ class Game:
                 self.player.rect = [self.player.startX, self.player.startY, 98, 98]
                 self.player.draw(Game.charColor)
 
-        self.temp = self.environment.getClass(int((x-2)/100), int((y-2)/100))
-        # self.temp.addHands()
+        if self.environment.matrix[int((x-2)/100)][int((y-2)/100)] == 9:
+            #Plate
+            if self.player.holding:
+                self.plate.append(self.player.inHands)
+                self.player.holding = False
+                self.player.inHands = None
+            else:
+                self.player.inHands = self.plate
+                self.plate = []
+                self.player.holding = True
+        elif self.environment.matrix[int((x-2)/100)][int((y-2)/100)] == 8:
+            #Customer
+            print(self.customerOrder)
+            if self.player.holding:
+                counter = 0
+                sortedPlate = sorted(self.player.inHands)
+                sortedOrder = sorted(self.customerOrder)
+                if len(sortedPlate) != len(sortedOrder):
+                    pass
+                else:
+                    for i in range(len(sortedPlate)):
+                        if sortedPlate[i] == sortedOrder[i]:
+                            counter += 1
+                            if counter == len(sortedOrder):
+                                self.exit = True
+                        else:
+                            break
+        else:
+            self.player.temp = self.environment.getClass(int((x-2)/100), int((y-2)/100))
+            self.player.inHands, self.player.holding = self.player.temp.addHands(self.player.inHands, self.player.holding)
+        print(self.player.inHands, self.player.holding)
     def update(self):
         self.draw()
-        self.environment.drawTimer()
+        self.environment.drawTimer(self.customerOrder)
 def main():
     # Initialize pygame
     pygame.init()
@@ -82,6 +113,6 @@ def main():
     # Start cooking
     game.playGame()
     # Quit if we get to this point
-    pygame.quit()
+    # pygame.quit()
 
 main()
