@@ -29,7 +29,6 @@ class Game:
             if self.cont:
                 self.events()
                 self.update()
-                # Check cond??
             self.draw()
             time.sleep(0.01)
 
@@ -72,7 +71,6 @@ class Game:
                 self.player.holding = True
         elif self.environment.matrix[int((x-2)/100)][int((y-2)/100)] == 8:
             #Customer
-            print(self.customerOrder)
             if self.player.holding:
                 counter = 0
                 sortedPlate = sorted(self.player.inHands)
@@ -108,7 +106,6 @@ def main():
         pygame.draw.line(surface, pygame.Color('white'), (0, 100*j), (800, 100*j), 2)
 
     # create and initialize objects
-    gameOver = False
     game = Game(surface)
     # Start cooking
     game.playGame()
