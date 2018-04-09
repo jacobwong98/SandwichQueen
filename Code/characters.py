@@ -2,18 +2,19 @@ import pygame, sys, time, random
 from pygame.locals import *
 
 class Player:
+    chef = pygame.image.load('../Images/chef.png')
     def __init__(self, surface):
         self.surface = surface
         self.startX = 102
         self.startY = 102
-        self.rect = [self.startX, self.startY, 98, 98]
+        # self.rect = [self.startX, self.startY, 98, 98]
         self.color = pygame.Color('white')
         self.holding = False
         self.inHands = None
         self.temp = None
 
-    def draw(self, Color):
-        pygame.draw.rect(self.surface, Color, self.rect)
+    def draw(self):
+        self.surface.blit(Player.chef,(self.startX, self.startY))
 
 
 class Empty:

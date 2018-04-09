@@ -19,7 +19,7 @@ class Game:
         self.cost = CostDistance(self.location)
 
     def draw(self):
-        self.player.draw(Game.charColor)
+        self.player.draw()
         self.environment.draw()
         pygame.display.update()
 
@@ -52,12 +52,12 @@ class Game:
 
         if len(reached) > 0:
             for i in range(len(reached)):
-                self.player.draw(Game.backColor)
+                pygame.draw.rect(self.surface,Game.backColor,[self.player.startX, self.player.startY,98,98])
                 point = self.location[reached.pop(0)]
                 self.player.startX = point[0]
                 self.player.startY = point[1]
-                self.player.rect = [self.player.startX, self.player.startY, 98, 98]
-                self.player.draw(Game.charColor)
+                # self.player.rect = [self.player.startX, self.player.startY, 98, 98]
+                self.player.draw()
 
         if self.environment.matrix[int((x-2)/100)][int((y-2)/100)] == 9:
             #Plate
