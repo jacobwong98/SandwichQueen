@@ -2,6 +2,7 @@ import pygame, sys, time, random
 from pygame.locals import *
 from leastCostPath import *
 from characters import *
+from environment import *
 
 class Game:
     charColor = pygame.Color('red')
@@ -76,6 +77,9 @@ class Game:
                 self.player.rect = [self.player.startX, self.player.startY, 98, 98]
                 # Draw the player in this new location
                 self.player.draw()
+        self.checkTile(x, y)
+
+    def checkTile(self, x, y):
         # Handles which square has been clicked on
         # Check if the square that was clicked on is the Plate
         if self.environment.matrix[int((x-2)/100)][int((y-2)/100)] == 9:
@@ -130,6 +134,7 @@ class Game:
             self.player.inHands, self.player.holding = self.player.temp.addHands(self.player.inHands, self.player.holding)
         # Print what the user is holding
         print(self.player.inHands)
+
     # Function will update any other elements that we need to update
     def update(self):
         # Update the timer a.k.a the score
