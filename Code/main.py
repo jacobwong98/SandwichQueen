@@ -149,18 +149,18 @@ def main():
     surface = pygame.display.set_mode((800, 600), 0, 0)
     pygame.display.set_caption('Sandwich Queen (Not copyright)')
     # Draw the game board grid
-    environment = Environment(surface)
-    environment.drawBoard()
-
-    # create and initialize objects
-    game = Game(surface)
     # Start cooking
     while True:
-        if mode:
+        if mode == 1:
+            environment = Environment(surface)
+            environment.drawBoard()
+
+            # create and initialize objects
+            game = Game(surface)
             game.playGame()
             mode = 0
         else:
-            environment.displayWin()
-            mode = 1
-            environment.drawBoard()
+            mode = environment.displayWin()
+            if mode == 1:
+                environment.drawBoard()
 main()

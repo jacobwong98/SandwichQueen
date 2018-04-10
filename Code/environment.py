@@ -95,16 +95,17 @@ class Environment:
             if event.type == KEYDOWN and event.key == K_RETURN:
                 return True
     def displayWin(self):
-        while True:
-            pressed = False
-            fontWin = pygame.font.SysFont('Comic Sans MS', 100, True)
-            textSurfaceWin = fontWin.render('YOU WIN!', True, pygame.Color('white'), pygame.Color('black'))
-            self.surface.blit(textSurfaceWin, ((self.surface.get_width()/2) - 250, self.surface.get_height()/2 - 100))
-            fontPlayAgain = pygame.font.SysFont('Comic Sans MS', 50, True)
-            textSurfacePlayAgain = fontPlayAgain.render('Press Enter to play again', True, pygame.Color('white'), pygame.Color('black'))
-            self.surface.blit(textSurfacePlayAgain, ((self.surface.get_width()/2) - 300, self.surface.get_height()/2 + 50))
-            pygame.display.update()
-            time.sleep(0.01)
-            pressed = self.checkEnter()
-            if pressed:
-                break
+        pressed = 0
+        result = 0
+        fontWin = pygame.font.SysFont('Comic Sans MS', 100, True)
+        textSurfaceWin = fontWin.render('YOU WIN!', True, pygame.Color('white'), pygame.Color('black'))
+        self.surface.blit(textSurfaceWin, ((self.surface.get_width()/2) - 250, self.surface.get_height()/2 - 100))
+        fontPlayAgain = pygame.font.SysFont('Comic Sans MS', 50, True)
+        textSurfacePlayAgain = fontPlayAgain.render('Press Enter to play again', True, pygame.Color('white'), pygame.Color('black'))
+        self.surface.blit(textSurfacePlayAgain, ((self.surface.get_width()/2) - 300, self.surface.get_height()/2 + 50))
+        pygame.display.update()
+        time.sleep(0.01)
+        pressed = self.checkEnter()
+        if pressed:
+             result = 1
+        return result
