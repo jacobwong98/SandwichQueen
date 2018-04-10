@@ -28,6 +28,8 @@ class Environment:
         self.dict = dict([(0,Empty()),(1,Meat()),(2, Cheese()),
         (3, Lettuce()),(4, Tomato()),(5, Grill()),(6, Board()),
         (7, Garbage())])
+        self.initTime = 0
+        # self.currTime = 0
     # Draw all the ingredients, arrows and other aspects on the screen
     def draw(self):
         self.surface.blit(Environment.downArrow, (102,302))
@@ -59,9 +61,9 @@ class Environment:
         # Determine a font size
         font = pygame.font.SysFont(None, 60, True)
         # Get the current time
-        time = pygame.time.get_ticks() // 1000
+        currTime = pygame.time.get_ticks() // 1000
         # Create a text surface that is to be drawn on the screen
-        textSurface = font.render(str(time), True, pygame.Color('white'), pygame.Color('black'))
+        textSurface = font.render(str(currTime - self.initTime), True, pygame.Color('white'), pygame.Color('black'))
         # Draw the timer on the screen
         self.surface.blit(textSurface, (510,10))
         # Determine a font size for the customer's order
@@ -72,9 +74,37 @@ class Environment:
             self.surface.blit(textSurfaceOrder, (602, i*10+2))
     # This function will draw the game board which is a grid
     def drawBoard(self):
+        # Clear the board
+        # pygame.draw.rect(self.surface, pygame.Color('black'), (0,0,800,600))
+        self.surface.fill(pygame.Color('black'))
+        self.initTime = pygame.time.get_ticks() // 1000
         # Draw the column lines
         for i in range(1, 8):
             pygame.draw.line(self.surface, pygame.Color('white'), (100*i, 0), (100*i, 600), 2)
         # Draw the row lines
         for j in range(0, 6):
             pygame.draw.line(self.surface, pygame.Color('white'), (0, 100*j), (800, 100*j), 2)
+
+    def checkEnter(self):
+        # Get the events that occur in pygame
+        for event in pygame.event.get():
+            # User has clicked on the exit sign of the window
+            if event.type == QUIT:
+                pygame.quit()
+            # User has clicked somewhere on the game board
+            if event.type == KEYDOWN and event.key == K_RETURN:
+                return True
+    def displayWin(self):
+        while True:
+            pressed = False
+            fontWin = pygame.font.SysFont('Comic Sans MS', 100, True)
+            textSurfaceWin = fontWin.render('YOU WIN!', True, pygame.Color('white'), pygame.Color('black'))
+            self.surface.blit(textSurfaceWin, ((self.surface.get_width()/2) - 250, self.surface.get_height()/2 - 100))
+            fontPlayAgain = pygame.font.SysFont('Comic Sans MS', 50, True)
+            textSurfacePlayAgain = fontPlayAgain.render('Press Enter to play again', True, pygame.Color('white'), pygame.Color('black'))
+            self.surface.blit(textSurfacePlayAgain, ((self.surface.get_width()/2) - 300, self.surface.get_height()/2 + 50))
+            pygame.display.update()
+            time.sleep(0.01)
+            pressed = self.checkEnter()
+            if pressed:
+                break
