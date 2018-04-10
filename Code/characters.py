@@ -7,12 +7,12 @@ class Player:
         self.surface = surface
         self.startX = 102
         self.startY = 102
-        # self.rect = [self.startX, self.startY, 98, 98]
+        self.rect = [self.startX, self.startY, 98, 98]
         self.color = pygame.Color('white')
         self.holding = False
         self.inHands = None
         self.temp = None
-
+    # Function will draw the player depending on their location
     def draw(self):
         self.surface.blit(Player.chef,(self.startX, self.startY))
 
@@ -71,12 +71,6 @@ class Customer:
             if num%2 == random.randint(0, 1):
                 self.plate.append(i)
         return self.plate
-# class Plate:
-#     def __init__(self, surface):
-#         self.currPlate = set()
-#     def addHands(self, inHands, holding):
-#         if holding:
-#             self.currPlate.add(inHands[0])
 
 class Environment:
     upArrow = pygame.image.load('../Images/arrowup.png')
@@ -124,14 +118,18 @@ class Environment:
                 return val
 
     def drawTimer(self, order):
-        fontSize = 75
-        font = pygame.font.SysFont(None, fontSize, True)
+        font = pygame.font.SysFont(None, 60, True)
         time = pygame.time.get_ticks() // 1000 # divide to convert to seconds
         textSurface = font.render(str(time), True, pygame.Color('white'), pygame.Color('black'))
         self.surface.blit(textSurface, (510,10))
 
-        fontSizeOrder = 15
-        fontOrder = pygame.font.SysFont(None, fontSizeOrder, True)
+        fontOrder = pygame.font.SysFont(None, 15, True)
         for i in range(len(order)):
             textSurfaceOrder = fontOrder.render(order[i], True, pygame.Color('white'), pygame.Color('black'))
             self.surface.blit(textSurfaceOrder, (602, i*10+2))
+
+    def drawBoard(self):
+        for i in range(1, 8):
+            pygame.draw.line(self.surface, pygame.Color('white'), (100*i, 0), (100*i, 600), 2)
+        for j in range(0, 6):
+            pygame.draw.line(self.surface, pygame.Color('white'), (0, 100*j), (800, 100*j), 2)
