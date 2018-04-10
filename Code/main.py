@@ -44,6 +44,7 @@ class Game:
             if event.type == QUIT:
                 self.exit = True
                 pygame.quit()
+                sys.exit()
             # User has clicked somewhere on the game board
             if event.type == MOUSEBUTTONUP and self.cont:
                 # Get the least cost path from user's click
@@ -148,15 +149,14 @@ def main():
     # Create the window
     surface = pygame.display.set_mode((800, 600), 0, 0)
     pygame.display.set_caption('Sandwich Queen (Not copyright)')
-    # Draw the game board grid
-    # Start cooking
     while True:
         if mode == 1:
-            environment = Environment(surface)
-            environment.drawBoard()
-
             # create and initialize objects
+            environment = Environment(surface)
             game = Game(surface)
+            # Draw the game board grid
+            environment.drawBoard()
+            # Start cooking
             game.playGame()
             mode = 0
         else:
