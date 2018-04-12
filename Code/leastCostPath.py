@@ -125,16 +125,17 @@ def load_graph(filename):
     with open(filename, 'r') as filename:
         graph = Graph()
         location = {}
-
+        # Go through each line in the text file
         for line in filename:
             lines = line.strip().split(",")
-
+            # If we see a V, add the ID and corresponding coordinates to the dictionary as a vertex
             if lines[0] == "V":
                 graph.add_vertex(int(lines[1]))
                 x = int(lines[2])
                 y = int(lines[3])
                 location[int(lines[1])] = (x, y)
-
+            # If we see an E, add the edge for one direction as well as the reverse direction
+            # to create the undirected graph
             elif lines[0] == "E":
                 graph.add_edge((int(lines[1]), int(lines[2])))
                 graph.add_edge((int(lines[2]), int(lines[1])))

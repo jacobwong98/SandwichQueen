@@ -150,6 +150,7 @@ def main():
     surface = pygame.display.set_mode((800, 600), 0, 0)
     pygame.display.set_caption('Sandwich Queen (Not copyright)')
     while True:
+        # Mode 1: Game play mode
         if mode == 1:
             # create and initialize objects
             environment = Environment(surface)
@@ -158,9 +159,14 @@ def main():
             environment.drawBoard()
             # Start cooking
             game.playGame()
+            # Change to the Win Screen Mode
             mode = 0
+        # Mode should equal 0 which represents the Win Screen
         else:
             mode = environment.displayWin()
+            # Once the user presses the enter key to play again, the mode
+            # will change to the game play mode and we want to redraw the game
+            # board just in case 
             if mode == 1:
                 environment.drawBoard()
 main()
