@@ -108,10 +108,10 @@ class CostDistance():
 
 def load_graph(filename):
     """
-    Loads the graph of Edmonton from the given file.
+    Loads the graph of game from the given file.
     Returns two items
     graph: the instance of the class Graph() corresponding to the
-    directed graph from edmonton-roads-2.0.1.txt
+    directed graph from country-roads.txt
     location: a dictionary mapping the identifier of a vertex to
     the pair (lat, lon) of geographic coordinates for that vertex.
     These should be integers measuring the lat/lon in 100000-ths
